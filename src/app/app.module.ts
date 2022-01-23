@@ -1,18 +1,40 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
+// Modules
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+// Components
 import { AppComponent } from './app.component';
+import { LandingPageHeaderComponent } from './landing-page/landing-page-header/landing-page-header.component';
+import { LandingPageFooterComponent } from './landing-page/landing-page-footer/landing-page-footer.component';
+import { LandingPageMainComponent } from './landing-page/landing-page-main/landing-page-main.component';
+import { LandingPageNavbarComponent } from './landing-page/landing-page-navbar/landing-page-navbar.component';
+import { LandingPageComponent } from './landing-page/landing-page/landing-page.component';
+
+// Services
+import { ElementRefService } from './landing-page/services/element-ref.service';
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LandingPageHeaderComponent,
+    LandingPageFooterComponent,
+    LandingPageMainComponent,
+    LandingPageNavbarComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
-  providers: [],
+  providers: [ElementRefService,
+    { provide: Window, useValue: window }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

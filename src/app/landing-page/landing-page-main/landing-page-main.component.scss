@@ -1,0 +1,26 @@
+@use '../../../assets/scss/landingPageConstants.scss' as c;
+$primaryColor:c.$primaryColorLandingPage;
+$secondaryColor:c.$secondaryColorLandingPage;
+$thirdColor:c.$thirdColorLandingPage;
+
+.primarycolor{
+  color:$primaryColor;
+}
+
+.works{
+  @include c.line_color_bcgcolor(4.9rem,$secondaryColor,$thirdColor)
+}
+.skills{
+  @include c.line_color_bcgcolor(4.8rem,$thirdColor,$secondaryColor)
+}
+.about{
+  @include c.line_color_bcgcolor(4.6rem,$secondaryColor,$thirdColor)
+
+}
+
+.progress{
+  height:0.7rem;
+  &-bar{
+    background-color:$primaryColor
+  }
+}
