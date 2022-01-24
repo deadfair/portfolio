@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ElementRefService } from '../services/element-ref.service';
+import { ScrollService } from '../services/scroll.service';
 
 @Component({
   selector: 'app-landing-page-main',
@@ -16,13 +16,13 @@ export class LandingPageMainComponent implements OnInit {
   @ViewChild('skills') public skills!: ElementRef ;
   @ViewChild('works') public works!: ElementRef ;
 
-  constructor(private _elementRefService: ElementRefService) { }
+  constructor(private _scrollService: ScrollService) { }
 
   ngOnInit(): void {}
   ngAfterViewInit(): void {
-    this._elementRefService.add({id:"about",ref:this.about})
-    this._elementRefService.add({id:"skills",ref:this.skills})
-    this._elementRefService.add({id:"works",ref:this.works})
+    this._scrollService.setElementRefById('about',this.about)
+    this._scrollService.setElementRefById('skills',this.skills)
+    this._scrollService.setElementRefById('works',this.works)
   }
 
 

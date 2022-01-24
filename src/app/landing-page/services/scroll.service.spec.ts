@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ElementRefService } from './element-ref.service';
+import { ScrollService } from './scroll.service';
 
-describe('ElementRefService', () => {
-  let service: ElementRefService;
+describe('ScrollService', () => {
+  let service: ScrollService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ElementRefService);
+    service = TestBed.inject(ScrollService);
   });
 
   it('should be created', () => {

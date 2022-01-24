@@ -1,6 +1,5 @@
-import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { ElementRefService } from '../services/element-ref.service';
-import { DOCUMENT } from '@angular/common';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ScrollService } from '../services/scroll.service';
 
 @Component({
   selector: 'app-landing-page-navbar',
@@ -9,28 +8,31 @@ import { DOCUMENT } from '@angular/common';
 })
 export class LandingPageNavbarComponent implements OnInit {
 
-  @Input() public ids: string[] = [];
-  @Input() public navLinkNames: string[] = [];
+  public ids: string[] = [];
+  public linkNames: string[] = [];
   @ViewChild('navbar') public navbar!: ElementRef ;
 
-  constructor(private _elementRefService: ElementRefService,@Inject(DOCUMENT) private _document: Document, private _window: Window) { }
+  constructor(private _scrollService: ScrollService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._scrollService.refElements.forEach(refElement=>{
+      this.ids.push(refElement.id);
+      this.linkNames.push(refElement.linkName)
+    })
+  }
 
-  scroll(id: string): void{
-    const element:ElementRef | undefined =  this._elementRefService.getElementRefById(id)
-    if (this.navbar===null || element===undefined) {
-      return;
+  ngAfterViewInit(): void {
+    this._scrollService.setNavbarElementRef(this.navbar)
+  }
+
+  scroll(event:Event): void{
+    event.preventDefault()
+    if (event.target===null) {
+      return
     }
-    const offset:number = this.navbar.nativeElement.clientHeight;
-    const bodyRect:number =  this._document.body.getBoundingClientRect().top;
-    const elementRect:number = element.nativeElement.getBoundingClientRect().top;
-    const elementPosition:number = elementRect - bodyRect;
-    const offsetPosition:number = elementPosition - offset;
+    const target = event.target as HTMLElement;
+    let linkName = target.innerText
 
-    this._window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    });
+    this._scrollService.scrollByLinkName(linkName)
   }
 }

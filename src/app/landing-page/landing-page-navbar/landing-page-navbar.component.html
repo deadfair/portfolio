@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
       <ul class="navbar-nav ">
         <li *ngFor="let id of ids; index as i" class="nav-item">
-          <a class="nav-link text-center fw-bold fs-5" (click)="scroll(id)" aria-current="page">{{navLinkNames[i]}}</a>
+          <a class="nav-link text-center fw-bold fs-5" (click)="scroll($event)"  aria-current="page" >{{linkNames[i]}}</a>
         </li>
       </ul>
     </div>

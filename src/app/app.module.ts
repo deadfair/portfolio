@@ -14,8 +14,7 @@ import { LandingPageNavbarComponent } from './landing-page/landing-page-navbar/l
 import { LandingPageComponent } from './landing-page/landing-page/landing-page.component';
 
 // Services
-import { ElementRefService } from './landing-page/services/element-ref.service';
-
+import { ScrollService } from './landing-page/services/scroll.service';
 
 
 @NgModule({
@@ -32,7 +31,8 @@ import { ElementRefService } from './landing-page/services/element-ref.service';
     AppRoutingModule,
     FontAwesomeModule
   ],
-  providers: [ElementRefService,
+  providers: [
+    ScrollService,
     { provide: Window, useValue: window }
   ],
   bootstrap: [AppComponent]

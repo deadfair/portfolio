@@ -7,12 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
 
-  public ids: string[]=["home","about","skills","works","footer"]
-  public navLinkNames:string[]=["Home","Rólam", "Tapasztalat","Munkáim", "Kapcsolat"]
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }
 
