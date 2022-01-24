@@ -25,6 +25,4 @@ export class LandingPageMainComponent implements OnInit {
     this._scrollService.setElementRefById('skills',this.skills)
     this._scrollService.setElementRefById('works',this.works)
   }
-
-
 }

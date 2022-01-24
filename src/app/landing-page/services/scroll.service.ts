@@ -8,7 +8,7 @@ import { RefElement } from '../models/refElement';
 export class ScrollService {
 
   private _navbar:RefElement=new RefElement("navbar","navbár");
-  private _refElements:RefElement[] =[]
+  private _refElements:RefElement[] = []
 
   get refElements():RefElement[]{return this._refElements}
 
@@ -29,7 +29,7 @@ export class ScrollService {
     }
   }
 
-  setNavbarElementRef(elementRef:ElementRef){
+  setNavbarElementRef(elementRef:ElementRef):void{
     this._navbar.elementRef=elementRef
   }
 

@@ -25,9 +25,7 @@ export class LandingPageNavbarComponent implements OnInit {
 
   scroll(event:Event): void{
     event.preventDefault()
-    if (event.target===null) {
-      return
-    }
+
     const target = event.target as HTMLElement;
     let linkName = target.innerText
 
