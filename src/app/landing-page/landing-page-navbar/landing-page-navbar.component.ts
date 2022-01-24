@@ -8,7 +8,6 @@ import { ScrollService } from '../services/scroll.service';
 })
 export class LandingPageNavbarComponent implements OnInit {
 
-  public ids: string[] = [];
   public linkNames: string[] = [];
   @ViewChild('navbar') public navbar!: ElementRef ;
 
@@ -16,7 +15,6 @@ export class LandingPageNavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this._scrollService.refElements.forEach(refElement=>{
-      this.ids.push(refElement.id);
       this.linkNames.push(refElement.linkName)
     })
   }

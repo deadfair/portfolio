@@ -12,8 +12,8 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
       <ul class="navbar-nav ">
-        <li *ngFor="let id of ids; index as i" class="nav-item">
-          <a class="nav-link text-center fw-bold fs-5" (click)="scroll($event)"  aria-current="page" >{{linkNames[i]}}</a>
+        <li *ngFor="let linkName of linkNames; index as i" class="nav-item">
+          <a class="nav-link text-center fw-bold fs-5" (click)="scroll($event)"  aria-current="page" >{{linkName}}</a>
         </li>
       </ul>
     </div>
