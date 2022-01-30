@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { LandingPageConfigService } from '../services/landing-page-config.service';
 import { ScrollService } from '../services/scroll.service';
 
 @Component({
@@ -8,15 +9,17 @@ import { ScrollService } from '../services/scroll.service';
 })
 export class LandingPageMainComponent implements OnInit,AfterViewInit {
 
-  public skillsArr={
-    keys:["HTML5","CSS, SCSS","Bootstrap","JavaScript","TypeScript","Angular","RxJS, NgRx","SQL, NoSQL"],
-    values:[90,83,90,95,97,85,70,60]
-  }
+  public readonly skillsArr: { text: string; value: number; }[]=[]
+  public readonly aboutText: {title: string,text: string}
+
   @ViewChild('about') public about!: ElementRef ;
   @ViewChild('skills') public skills!: ElementRef ;
   @ViewChild('works') public works!: ElementRef ;
 
-  constructor(private _scrollService: ScrollService) { }
+  constructor(private _scrollService: ScrollService,private readonly _landingPageConfigService:LandingPageConfigService) {
+    this.aboutText= this._landingPageConfigService.about;
+    this._landingPageConfigService.skills.forEach(skill=> this.skillsArr.push(skill));
+  }
 
   ngOnInit(): void {}
   ngAfterViewInit(): void {

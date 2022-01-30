@@ -1,25 +1,21 @@
 import { DOCUMENT } from '@angular/common';
 import { ElementRef, Inject, Injectable } from '@angular/core';
 import { RefElement } from '../../models/refElement';
+import { LandingPageConfigService } from './landing-page-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScrollService {
 
-  private _navbar:RefElement=new RefElement("navbar","navbár");
-  private _refElements:RefElement[] = []
+  private readonly _navbar:RefElement;
+  private readonly _refElements:RefElement[] = []
 
   get refElements():RefElement[]{return this._refElements}
 
-  constructor(@Inject(DOCUMENT) private _document: Document,private _window: Window) {
-    [
-      {id:"home",linkName:"Home"},
-      {id:"about",linkName:"Rólam"},
-      {id:"skills",linkName:"Tapasztalat"},
-      {id:"works",linkName:"Munkáim"},
-      {id:"footer",linkName:"Kapcsolat"}
-    ].forEach(refElement => this._refElements.push(new RefElement(refElement.id,refElement.linkName)))
+  constructor(@Inject(DOCUMENT) private _document: Document,private _window: Window,private readonly _landingPageConfigService:LandingPageConfigService) {
+    this._landingPageConfigService.navbuttons.forEach(refElement => this._refElements.push(new RefElement(refElement.id,refElement.text)))
+    this._navbar = new RefElement(this._landingPageConfigService.navbar.id,this._landingPageConfigService.navbar.text)
   }
 
   setElementRefById(id:string,elementRef:ElementRef):void{
@@ -33,13 +29,13 @@ export class ScrollService {
     this._navbar.elementRef=elementRef
   }
 
-  getRefElementByLinkName(linkName:string):RefElement | undefined{
-    return this._refElements.find(e => e.linkName === linkName)
+  getRefElementByLinkName(text:string):RefElement | undefined{
+    return this._refElements.find(e => e.text === text)
   }
 
-  scrollByLinkName(linkName:string): void{
+  scrollByLinkName(text:string): void{
 
-    const refElement:RefElement | undefined = this.getRefElementByLinkName(linkName)
+    const refElement:RefElement | undefined = this.getRefElementByLinkName(text)
 
     if (this._navbar.elementRef===undefined || this._navbar.elementRef===null || refElement===undefined || refElement.elementRef===undefined) {
       return;

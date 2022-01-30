@@ -18,6 +18,7 @@ import { ScrollService } from './landing-page/services/scroll.service';
 import { SnakeGameComponent } from './snake-game/components/snake-game/snake-game.component';
 import { SnakeCanvasComponent } from './snake-game/components/snake-canvas/snake-canvas.component';
 import { SnakeConfigService } from './snake-game/services/snake-config.service';
+import { LandingPageConfigService } from './landing-page/services/landing-page-config.service';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { SnakeConfigService } from './snake-game/services/snake-config.service';
   providers: [
     ScrollService,
     { provide: Window, useValue: window },
-    SnakeConfigService
+    SnakeConfigService,
+    LandingPageConfigService
   ],
   bootstrap: [AppComponent]
 })

@@ -10,19 +10,8 @@
           <img src="../../../assets/imgs/én_1.jpeg" alt="" class="img-fluid h-75 rounded-3 shadow-lg">
         </div>
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center ">
-          <h3 class="fs-4 fw-bold mb-4 align-self-md-start">Egy Junior Front-End fejlesztő</h3>
-          <p class="">
-            BME-n végeztem, mint villamosmérnök, továbbá elvégeztem a Progmasters
-            Junior Front-End fejlesztő képzését.
-            Jól helytállok csapatban és egyedül is, igényes, precíz, pontos munkát végzek.
-            Jó analitikus és problémamegoldó képességgel rendelkezem.
-            Matek és az algoritmizálás mindig is közel álltak hozzám.
-            A "growth mindset" szemléletet vallom,
-            szeretek új dolgokat tanulni.
-            Olyan munkakörnyezetbe szeretnék dolgozni,
-            ahol kamatoztathatom az eddig megszerzett tudásomat és
-            folyamatosan fejlődhetek, hogy kimagasló szakember lehessek.
-          </p>
+          <h3 class="fs-4 fw-bold mb-4 align-self-md-start"> {{aboutText.title}}</h3>
+          <p class="">{{aboutText.text}}</p>
         </div>
       </div>
     </div>
@@ -53,17 +42,17 @@
             <span class="primarycolor fw-bold">Angular:</span> komplex webalkalmazások fejlesztése
           </p>
           <p>
-            <span class="primarycolor fw-bold">NoSQL:</span> firebase, firestore gyakorlat
+            <span class="primarycolor fw-bold">NoSQL:</span> firebase, firestore-ban szerzett gyakorlat
           </p>
         </div>
         <div class="col-12 col-md-6">
-          <div *ngFor="let value of skillsArr.values,index as i">
-            <p class="mb-1 mt-3">{{skillsArr.keys[i]}}</p>
+          <div *ngFor="let skill of skillsArr">
+            <p class="mb-1 mt-3">{{skill.text}}</p>
             <div class="progress">
               <div class="progress-bar"
                 role="progressbar"
-                [ngStyle]="{'width': skillsArr.values[i] + '%'}"
-                attr.aria-valuenow="{{skillsArr.values[i]}}"
+                [ngStyle]="{'width': skill.value + '%'}"
+                attr.aria-valuenow="{{skill.value}}"
                 aria-valuemin="0"
                 aria-valuemax="100">
               </div>

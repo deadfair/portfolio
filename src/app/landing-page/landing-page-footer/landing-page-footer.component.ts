@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { faUser,faMapMarkerAlt, IconDefinition,faEnvelope, faPhone,} from '@fortawesome/free-solid-svg-icons';
 import {faFacebookF, faGithub, faLinkedinIn} from '@fortawesome/free-brands-svg-icons';
 import { ScrollService } from '../services/scroll.service';
+import { LandingPageConfigService } from '../services/landing-page-config.service';
 
 @Component({
   selector: 'app-landing-page-footer',
@@ -10,13 +11,12 @@ import { ScrollService } from '../services/scroll.service';
 })
 export class LandingPageFooterComponent implements OnInit,AfterViewInit {
   public icons:IconDefinition[] = [faUser,faMapMarkerAlt,faEnvelope,faPhone,faFacebookF, faGithub, faLinkedinIn]
-  public person={
-    keys:["Név","Cím","Email","Telefonszám"],
-    values:["Ballér Pál Krisztián","Magyarország, Balatonlelle","baller.krisztian@gmail.com","06/70-539-7536"]
-  }
+  public readonly personFields;
   @ViewChild('footer') public footer!: ElementRef ;
 
-  constructor(private _scrollService: ScrollService) { }
+  constructor(private readonly _scrollService: ScrollService,private readonly _landingPageConfigService:LandingPageConfigService) {
+    this.personFields=this._landingPageConfigService.person
+  }
 
   ngOnInit(): void {}
   ngAfterViewInit(): void {

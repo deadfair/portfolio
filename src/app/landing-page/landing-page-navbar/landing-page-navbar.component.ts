@@ -15,7 +15,7 @@ export class LandingPageNavbarComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this._scrollService.refElements.forEach(refElement=>{
-      this.linkNames.push(refElement.linkName)
+      this.linkNames.push(refElement.text)
     })
   }
 
