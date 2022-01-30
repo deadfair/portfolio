@@ -15,6 +15,8 @@ import { LandingPageComponent } from './landing-page/landing-page/landing-page.c
 
 // Services
 import { ScrollService } from './landing-page/services/scroll.service';
+import { SnakeGameComponent } from './snake-game/components/snake-game/snake-game.component';
+import { SnakeCanvasComponent } from './snake-game/components/snake-canvas/snake-canvas.component';
 
 
 @NgModule({
@@ -25,6 +27,8 @@ import { ScrollService } from './landing-page/services/scroll.service';
     LandingPageMainComponent,
     LandingPageNavbarComponent,
     LandingPageComponent,
+    SnakeGameComponent,
+    SnakeCanvasComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,7 @@ import { ScrollService } from './landing-page/services/scroll.service';
   ],
   providers: [
     ScrollService,
-    { provide: Window, useValue: window }
+    { provide: Window, useValue: window },
   ],
   bootstrap: [AppComponent]
 })

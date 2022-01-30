@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { ElementRef, Inject, Injectable } from '@angular/core';
-import { RefElement } from '../models/refElement';
+import { RefElement } from '../../models/refElement';
 
 @Injectable({
   providedIn: 'root'
