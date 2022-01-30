@@ -1,7 +1,7 @@
 import {Point} from './point'
 import {Directions} from './directions'
 import { Difficulty } from '../interfaces/difficulty';
-import { SnakeConfig } from './snakeconfig';
+import { CanvasSizes } from '../interfaces/canvalsizes';
 
 export class Snake{
   private _speed:number=0;
@@ -9,38 +9,34 @@ export class Snake{
   protected readonly _directions;
   protected readonly _body:Point[]=[new Point(0,0)]
 
-  private static readonly _difficultys:Difficulty[]=SnakeConfig.difficultys
-  private static readonly _defaultDifficulty:Difficulty={name:"Unknown",speed:50,acceleration:0}
-
-  public static get difficultys():Difficulty[]{return this._difficultys}
-  public static get defaultDifficulty():Difficulty{return this._defaultDifficulty}
+  public get difficultys():Difficulty[]{return this._difficultys}
   public get body():Point[]{return this._body}
   get speed(){return this._speed}
 
-  constructor(difficultyName:string,boxUnit:number){
-    this._directions=new Directions(boxUnit)
+  constructor(difficultyID:string,canvasSizes:CanvasSizes,private readonly _difficultys:Difficulty[]){
+    this._directions=new Directions(canvasSizes.boxUnit)
     this._directions.currentDirection=(this._directions.RIGHT)
-    this.difficultyChange(difficultyName);
+    this.difficultyChange(difficultyID);
   }
 
   protected speedIncrement():void{this._speed = this._speed + this._acceleration;}
 
-  private speedInit(difficultyName:string):void{
-    const currentDifficulty : Difficulty = this.getDifficultyByDifficultyName(difficultyName)
-    this._speed= currentDifficulty.speed + (this.body.length-1) * this._acceleration
+  private speedInit(id:string):void{
+    const currentDifficulty : Difficulty = this.getDifficultyByID(id)
+    this._speed = currentDifficulty.speed + (this.body.length-1) * this._acceleration
   }
-  private accelerationInit(difficultyName:string):void{
-    const currentDifficulty : Difficulty = this.getDifficultyByDifficultyName(difficultyName)
+  private accelerationInit(id:string):void{
+    const currentDifficulty : Difficulty = this.getDifficultyByID(id)
     this._acceleration= currentDifficulty.acceleration
   }
 
-  private getDifficultyByDifficultyName(difficultyName:string):Difficulty{
-    return  Snake._difficultys.find((d)=>d.name === difficultyName) || Snake.defaultDifficulty
+  private getDifficultyByID(id:string):Difficulty{
+    return  this._difficultys.find((d)=>d.id === id) || this._difficultys[0]
   }
 
-  public difficultyChange(difficultyName:string):void{
-    this.accelerationInit(difficultyName)
-    this.speedInit(difficultyName)
+  public difficultyChange(id:string):void{
+    this.accelerationInit(id)
+    this.speedInit(id)
   }
 
   public getHead(distance:number=0):Point{

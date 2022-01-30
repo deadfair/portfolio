@@ -14,15 +14,15 @@
       <div  class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto ">
           <li class="nav-item ">
-            <a  #start class="nav-link fs-5 mx-2 text-center"  (click)="gameClickButton('start')"  role="button"
+            <a  #start class="nav-link fs-5 mx-2 text-center"  (click)="onGameStateClick('start')"  role="button"
                 >Start
               </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link fs-5 mx-2 text-center" role="button" (click)="gameClickButton('pause')" >Pause</a>
+            <a class="nav-link fs-5 mx-2 text-center" role="button" (click)="onGameStateClick('pause')" >Pause</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link fs-5 mx-2 text-center" role="button" (click)="gameClickButton('restart')" >Restart</a>
+            <a class="nav-link fs-5 mx-2 text-center" role="button" (click)="onGameStateClick('restart')" >Restart</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle fs-5 mx-1 text-center ps-3"
@@ -33,7 +33,7 @@
               Difficulty
             </a>
             <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-              <li *ngFor="let diff of difficultys"><a class="dropdown-item text-center" (click)="difficultyClickButton(diff.name)"  role="button"> {{diff.name}}</a></li>
+              <li *ngFor="let diff of difficultys"><a class="dropdown-item text-center" (click)="onDifficultyClick(diff.id)"  role="button"> {{diff.text}}</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -45,7 +45,7 @@
               Mode
             </a>
             <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
-              <li *ngFor="let mode of modes"><a class="dropdown-item text-center" (click)="modeClickButton(mode)"  role="button"> {{mode}}</a></li>
+              <li *ngFor="let mode of modes"><a class="dropdown-item text-center" (click)="onModeClick(mode.id)"  role="button"> {{mode.text}}</a></li>
             </ul>
           </li>
         </ul>

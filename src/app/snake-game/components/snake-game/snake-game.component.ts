@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { Difficulty } from '../../interfaces/difficulty';
-import { ModeName, SnakeConfig } from '../../models/snakeconfig';
+import { GameMode } from '../../interfaces/gamemode';
+import { SnakeConfigService } from '../../services/snake-config.service';
 
 
 @Component({
@@ -10,9 +11,9 @@ import { ModeName, SnakeConfig } from '../../models/snakeconfig';
 })
 export class SnakeGameComponent implements OnInit {
 
-  public difficultys:Difficulty[] = SnakeConfig.difficultys
+  public difficultys:Difficulty[]
+  public modes:GameMode[]
   public difficulty:string="";
-  public modes:string[] = Object.values(ModeName)
   public mode:string=""
   public score:number=0;
   public gameClickHeandler: EventEmitter<string> = new EventEmitter();
@@ -20,7 +21,10 @@ export class SnakeGameComponent implements OnInit {
   public modeClickHeandler: EventEmitter<string> = new EventEmitter();
   @ViewChild('start') public start!: ElementRef ;
 
-  constructor(private _window: Window) {}
+  constructor(private _window: Window,private readonly _snakeConfigService : SnakeConfigService) {
+    this.modes = _snakeConfigService.gameModes
+    this.difficultys = _snakeConfigService.difficultys
+  }
 
   ngOnInit(): void {}
 
@@ -28,28 +32,28 @@ export class SnakeGameComponent implements OnInit {
     this.underMdSizeCollapseMenu(this.start)
   }
 
-  gameClickButton(id: string): void{
-    this.gameClickHeandler.emit(id);
+  onGameStateClick(newState: string): void{
+    this.gameClickHeandler.emit(newState);
   }
 
-  difficultyClickButton(name: string): void{
-    this.difficultyClickHeandler.emit(name);
+  onDifficultyClick(id: string): void{
+    this.difficultyClickHeandler.emit(id);
   }
 
-  modeClickButton(mode: string): void{
-    this.modeClickHeandler.emit(mode);
+  onModeClick(id: string): void{
+    this.modeClickHeandler.emit(id);
   }
 
-  difficultyChange(value:string):void{
-    this.difficulty = value
+  difficultyChange(id:string):void{
+    this.difficulty = this._snakeConfigService.getDifficultyTextById(id)
   }
 
-  modeChange(value:string):void{
-    this.mode = value
+  modeChange(id:string):void{
+    this.mode = this._snakeConfigService.getGameModeTextById(id)
   }
 
   scoreChange(value:number): void{
-    this.score =value
+    this.score = value
   }
 
   private underMdSizeCollapseMenu(element:ElementRef):void{

@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { CanvasOptions } from '../../interfaces/canvasoptions';
 import { AISnake } from '../../models/aisnake';
 import { Point } from '../../models/point';
 import { Snake } from '../../models/snake';
-import { DifficultyName, ModeName, SnakeConfig } from '../../models/snakeconfig';
+import { SnakeConfigService } from '../../services/snake-config.service';
 
 @Component({
   selector: 'app-snake-canvas',
@@ -19,39 +20,43 @@ export class SnakeCanvasComponent implements OnInit, AfterViewInit {
   @Input() difficultyClickHeandler!: EventEmitter<string>;
   @Input() modeClickHeandler!: EventEmitter<string>;
 
-  private difficulty: string = DifficultyName.IMPOSSIBLE;
-  private mode:string = ModeName.PLAYER
+  private difficultyID: string;
+  private gameModeID:string;
+  private readonly canvasOptions:CanvasOptions;
   private snake!: AISnake | Snake
   private ctx!: CanvasRenderingContext2D;
-  private apple: Point = this.createApple()
+  private apple: Point
   private timerId: any
   private score: number = 0;
+  private difficultyCanChange: boolean = true;
+  private modeCanChange: boolean = true;
   private gameIsStay: boolean = true;
   private _gameIsOver: boolean = false;
   get gameIsOver(): boolean { return this._gameIsOver; }
-  private difficultyCanChange: boolean = true;
-  private modeCanChange: boolean = true;
   @ViewChild('canvas', { static: false }) public canvas!: ElementRef;
 
-  constructor() {
+  constructor(private readonly _snakeConfigService : SnakeConfigService) {
+    this.difficultyID = this._snakeConfigService.difficultys[0].id
+    this.gameModeID = this._snakeConfigService.gameModes[0].id
+    this.canvasOptions= this._snakeConfigService.canvasOptions
+    this.apple = this.createApple()
     this.snakeInit()
   }
 
   ngOnInit(): void {
-    this.gameClickHeandler.subscribe((value) => { this.gameClickHeandlerSwitch(value) })
-    this.difficultyClickHeandler.subscribe((value) => {
-      this.difficulty = value
+    this.gameClickHeandler.subscribe((state) => { this.gameStateClickHeandler(state) })
+    this.difficultyClickHeandler.subscribe((id) => {
+      this.difficultyID = id
       if (this.difficultyCanChange) {
-        this.difficultyChange.emit(this.difficulty)
+        this.difficultyChange.emit(this.difficultyID)
       }
     })
-    this.modeClickHeandler.subscribe((value) => {
-      this.mode= value
+    this.modeClickHeandler.subscribe((id) => {
+      this.gameModeID = id
       if (this.modeCanChange) {
-        this.modeChange.emit(this.mode)
+        this.modeChange.emit(this.gameModeID)
       }
     })
-
   }
 
   ngAfterViewInit(): void {
@@ -60,8 +65,8 @@ export class SnakeCanvasComponent implements OnInit, AfterViewInit {
     this.canvasRender();
     this.snakeRender();
     this.scoreRender();
-    Promise.resolve().then(() => {this.difficultyChange.emit(this.difficulty)})
-    Promise.resolve().then(() => {this.modeChange.emit(this.mode)})
+    Promise.resolve().then(() => {this.difficultyChange.emit(this.difficultyID)})
+    Promise.resolve().then(() => {this.modeChange.emit(this.gameModeID)})
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -70,8 +75,8 @@ export class SnakeCanvasComponent implements OnInit, AfterViewInit {
   }
 
   private canvasSizeInit(): void {
-    this.canvas.nativeElement.height = SnakeConfig.canvasSizes.height
-    this.canvas.nativeElement.width = SnakeConfig.canvasSizes.width
+    this.canvas.nativeElement.height = this.canvasOptions.sizes.height
+    this.canvas.nativeElement.width = this.canvasOptions.sizes.width
   }
 
   private appleInit():void {
@@ -87,15 +92,12 @@ export class SnakeCanvasComponent implements OnInit, AfterViewInit {
   }
 
   private createApple():Point {
-    const x = Math.floor(Math.random() * (SnakeConfig.canvasSizes.width) / SnakeConfig.canvasSizes.boxUnit) * SnakeConfig.canvasSizes.boxUnit
-    const y = Math.floor(Math.random() * (SnakeConfig.canvasSizes.height) / SnakeConfig.canvasSizes.boxUnit) * SnakeConfig.canvasSizes.boxUnit
+    const x = Math.floor(Math.random() * (this.canvasOptions.sizes.width) / this.canvasOptions.sizes.boxUnit) * this.canvasOptions.sizes.boxUnit
+    const y = Math.floor(Math.random() * (this.canvasOptions.sizes.height) / this.canvasOptions.sizes.boxUnit) * this.canvasOptions.sizes.boxUnit
     return new Point(x, y)
   }
 
-
-
-
-  private gameClickHeandlerSwitch(value: string): void {
+  private gameStateClickHeandler(value: string): void {
     switch (value) {
       case "start": this.start();
         break;
@@ -107,8 +109,6 @@ export class SnakeCanvasComponent implements OnInit, AfterViewInit {
         break;
     }
   }
-
-
 
   private setFrequency(): void {
     clearInterval(this.timerId)
@@ -140,8 +140,6 @@ export class SnakeCanvasComponent implements OnInit, AfterViewInit {
     this.appleInit()
   }
 
-
-
   private render():void {
     this.canvasRender();
     this.appleRender();
@@ -150,24 +148,22 @@ export class SnakeCanvasComponent implements OnInit, AfterViewInit {
   }
 
   private canvasRender():void {
-    this.ctx.fillStyle = SnakeConfig.canvasColors.background;
-    this.ctx.fillRect(0, 0, SnakeConfig.canvasSizes.width, SnakeConfig.canvasSizes.height);
+    this.ctx.fillStyle = this.canvasOptions.colors.background;
+    this.ctx.fillRect(0, 0, this.canvasOptions.sizes.width, this.canvasOptions.sizes.height);
   }
   private appleRender():void {
-    this.ctx.fillStyle = SnakeConfig.canvasColors.apple
-    this.ctx.fillRect(this.apple.x, this.apple.y, SnakeConfig.canvasSizes.boxUnit, SnakeConfig.canvasSizes.boxUnit)
+    this.ctx.fillStyle = this.canvasOptions.colors.apple
+    this.ctx.fillRect(this.apple.x, this.apple.y, this.canvasOptions.sizes.boxUnit, this.canvasOptions.sizes.boxUnit)
   }
   private snakeRender():void {
     for (const snakeBodyUnite of this.snake.body) {
-      this.ctx.fillStyle = SnakeConfig.canvasColors.snake
-      this.ctx.fillRect(snakeBodyUnite.x, snakeBodyUnite.y, SnakeConfig.canvasSizes.boxUnit, SnakeConfig.canvasSizes.boxUnit)
+      this.ctx.fillStyle = this.canvasOptions.colors.snake
+      this.ctx.fillRect(snakeBodyUnite.x, snakeBodyUnite.y, this.canvasOptions.sizes.boxUnit, this.canvasOptions.sizes.boxUnit)
     }
   }
   private scoreRender():void {
     this.scoreChange.emit(this.score)
   }
-
-
 
   private isGameOver(): boolean {
     return this.isCollisionInWall() || this.snake.checkEatingMyTail()
@@ -176,8 +172,8 @@ export class SnakeCanvasComponent implements OnInit, AfterViewInit {
   private isCollisionInWall():boolean {
     return this.snake.getHead().x < 0 ||
       this.snake.getHead().y < 0 ||
-      this.snake.getHead().x >= SnakeConfig.canvasSizes.width ||
-      this.snake.getHead().y >= SnakeConfig.canvasSizes.height
+      this.snake.getHead().x >= this.canvasOptions.sizes.width ||
+      this.snake.getHead().y >= this.canvasOptions.sizes.height
   }
 
   private gameOver():void {
@@ -187,15 +183,13 @@ export class SnakeCanvasComponent implements OnInit, AfterViewInit {
     this.modeCanChange = true;
   }
 
-
-
   private start(): void {
     if (this.modeCanChange) {
       this.snakeInit()
     }
     if (this.gameIsStay && !this._gameIsOver) {
-      this.difficultyChange.emit(this.difficulty)
-      this.snake.difficultyChange(this.difficulty)
+      this.difficultyChange.emit(this.difficultyID)
+      this.snake.difficultyChange(this.difficultyID)
       this.continue()
     }
   }
@@ -221,19 +215,18 @@ export class SnakeCanvasComponent implements OnInit, AfterViewInit {
   }
 
   private snakeInit():void {
-    if (this.mode === ModeName.PLAYER) {
-      this.snake = new Snake(this.difficulty, SnakeConfig.canvasSizes.boxUnit);
+    if (this.gameModeID === "player") {
+      this.snake = new Snake(this.difficultyID, this.canvasOptions.sizes,this._snakeConfigService.difficultys);
       return
     }
-    if (this.mode === ModeName.AI) {
-      this.snake = new AISnake(this.difficulty, SnakeConfig.canvasSizes.boxUnit);
+    if (this.gameModeID === "ai") {
+      this.snake = new AISnake(this.difficultyID, this.canvasOptions.sizes,this._snakeConfigService.difficultys);
       const tempsnake = this.snake as AISnake;
       tempsnake.calculateRoad(this.apple)
       return
     }
-    this.snake = new Snake(this.difficulty, SnakeConfig.canvasSizes.boxUnit);
+    this.snake = new Snake(this.difficultyID, this.canvasOptions.sizes,this._snakeConfigService.difficultys);
   }
-
 
   private pause():void {
     clearInterval(this.timerId)

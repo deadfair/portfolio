@@ -1,13 +1,18 @@
+import { CanvasSizes } from "../interfaces/canvalsizes";
+import { Difficulty } from "../interfaces/difficulty";
 import { AIPoint } from "./aipoint";
 import { Link } from "./link";
 import { Point } from "./point";
 import { PointLinkedList } from "./pointLinkedList";
 import { Snake } from "./snake";
-import { SnakeConfig } from "./snakeconfig";
 
 export class AISnake extends Snake{
 
   private _road!:PointLinkedList;
+
+  constructor(difficultyID:string,private _canvasSizes:CanvasSizes,difficultys:Difficulty[]){
+    super(difficultyID,_canvasSizes,difficultys)
+  }
 
   public calculateRoad(apple:Point):void{
     let endlessLoopSaver = 0
@@ -21,7 +26,7 @@ export class AISnake extends Snake{
       }
       this._road.push(this.choseRoadNewDirrection(apple))
     }
-    this._road.shift()    // mert az almát kikell venni, evésnél is belerakjuk
+    this._road.shift()    // mert az almát kikell venni, ui.:evésnél is belerakjuk
   }
 
   public override move():void{
@@ -184,7 +189,7 @@ export class AISnake extends Snake{
   }
 
   private isKillMyselfInWall(aiPoint:AIPoint):boolean {
-    return aiPoint.x<0 || aiPoint.y<0 || aiPoint.x>=SnakeConfig.canvasSizes.width || aiPoint.y>=SnakeConfig.canvasSizes.height
+    return aiPoint.x<0 || aiPoint.y<0 || aiPoint.x>=this._canvasSizes.width || aiPoint.y>=this._canvasSizes.height
   }
 }
 

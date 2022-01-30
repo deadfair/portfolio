@@ -1,5 +1,6 @@
 export interface Difficulty{
-  name:string;
+  id:string;
+  text:string;
   speed:number;
   acceleration:number;
 }
