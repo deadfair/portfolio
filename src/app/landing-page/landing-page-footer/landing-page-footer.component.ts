@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { faUser,faMapMarkerAlt, IconDefinition,faEnvelope, faPhone,} from '@fortawesome/free-solid-svg-icons';
 import {faFacebookF, faGithub, faLinkedinIn} from '@fortawesome/free-brands-svg-icons';
 import { ScrollService } from '../services/scroll.service';
@@ -8,7 +8,7 @@ import { ScrollService } from '../services/scroll.service';
   templateUrl: './landing-page-footer.component.html',
   styleUrls: ['./landing-page-footer.component.scss']
 })
-export class LandingPageFooterComponent implements OnInit {
+export class LandingPageFooterComponent implements OnInit,AfterViewInit {
   public icons:IconDefinition[] = [faUser,faMapMarkerAlt,faEnvelope,faPhone,faFacebookF, faGithub, faLinkedinIn]
   public person={
     keys:["Név","Cím","Email","Telefonszám"],

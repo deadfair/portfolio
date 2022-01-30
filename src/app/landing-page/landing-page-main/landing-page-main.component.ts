@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ScrollService } from '../services/scroll.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { ScrollService } from '../services/scroll.service';
   templateUrl: './landing-page-main.component.html',
   styleUrls: ['./landing-page-main.component.scss']
 })
-export class LandingPageMainComponent implements OnInit {
+export class LandingPageMainComponent implements OnInit,AfterViewInit {
 
   public skillsArr={
     keys:["HTML5","CSS, SCSS","Bootstrap","JavaScript","TypeScript","Angular","RxJS, NgRx","SQL, NoSQL"],

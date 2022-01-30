@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ScrollService } from '../services/scroll.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { ScrollService } from '../services/scroll.service';
   templateUrl: './landing-page-navbar.component.html',
   styleUrls: ['./landing-page-navbar.component.scss']
 })
-export class LandingPageNavbarComponent implements OnInit {
+export class LandingPageNavbarComponent implements OnInit, AfterViewInit {
 
   public linkNames: string[] = [];
   @ViewChild('navbar') public navbar!: ElementRef ;

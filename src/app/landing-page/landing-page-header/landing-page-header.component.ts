@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ScrollService } from '../services/scroll.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { ScrollService } from '../services/scroll.service';
   templateUrl: './landing-page-header.component.html',
   styleUrls: ['./landing-page-header.component.scss']
 })
-export class LandingPageHeaderComponent implements OnInit {
+export class LandingPageHeaderComponent implements OnInit,AfterViewInit {
 
   constructor(private _scrollService: ScrollService) { }
 
