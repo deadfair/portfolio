@@ -7,7 +7,6 @@ import { SnakeGameComponent } from './snake-game/components/snake-game/snake-gam
 const routes: Routes = [
   {
     path:"",
-    // component:LandingPageComponent,
     redirectTo:"/portfolio",
     pathMatch:"full"
   },
@@ -25,7 +24,8 @@ const routes: Routes = [
   },
   {
     path:"**",
-    component:LandingPageComponent
+    redirectTo:"/portfolio",
+    pathMatch:"full"
   }
 ];
 
