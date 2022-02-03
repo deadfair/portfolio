@@ -67,14 +67,19 @@
         <p class="text-center mx-0 my-3 p-0 text-white fs-2"  >{{mode}}</p>
       </div>
     </div>
-        <app-snake-canvas
-          (difficultyChange)="difficultyChange($event)"
-          (scoreChange)="scoreChange($event)"
-          (modeChange)="modeChange($event)"
-          [gameClickHeandler]="gameClickHeandler"
-          [difficultyClickHeandler]="difficultyClickHeandler"
-          [modeClickHeandler]="modeClickHeandler"
-          >
-        </app-snake-canvas>
+    <app-snake-canvas
+      (difficultyChange)="difficultyChange($event)"
+      (scoreChange)="scoreChange($event)"
+      (modeChange)="modeChange($event)"
+      [gameClickHeandler]="gameClickHeandler"
+      [difficultyClickHeandler]="difficultyClickHeandler"
+      [modeClickHeandler]="modeClickHeandler"
+      >
+    </app-snake-canvas>
+    <div class="help row text-center fs-3 text-white mt-5">
+      <div class="col">
+        <p>Use the arrow keys to control the snake or enjoy the AI snake's dexterity.</p>
+      </div>
+    </div>
   </main>
 </div>

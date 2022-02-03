@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { LandingPageConfigService } from '../services/landing-page-config.service';
 import { ScrollService } from '../services/scroll.service';
 
@@ -10,15 +11,17 @@ import { ScrollService } from '../services/scroll.service';
 export class LandingPageMainComponent implements OnInit,AfterViewInit {
 
   public readonly skillsArr: { text: string; value: number; }[]=[]
-  public readonly aboutText: {title: string,text: string}
+  public readonly aboutText: { title: string,text: string }
+  public readonly projects: { url: string; text: string; imgSrc: string; }[]=[]
 
   @ViewChild('about') public about!: ElementRef ;
   @ViewChild('skills') public skills!: ElementRef ;
   @ViewChild('works') public works!: ElementRef ;
 
-  constructor(private _scrollService: ScrollService,private readonly _landingPageConfigService:LandingPageConfigService) {
+  constructor(private _scrollService: ScrollService,private readonly _landingPageConfigService:LandingPageConfigService,private readonly router:Router) {
     this.aboutText= this._landingPageConfigService.about;
     this._landingPageConfigService.skills.forEach(skill=> this.skillsArr.push(skill));
+    this.projects= this._landingPageConfigService.projects
   }
 
   ngOnInit(): void {}
@@ -26,5 +29,8 @@ export class LandingPageMainComponent implements OnInit,AfterViewInit {
     this._scrollService.setElementRefById('about',this.about)
     this._scrollService.setElementRefById('skills',this.skills)
     this._scrollService.setElementRefById('works',this.works)
+  }
+  navigateTo(page: string){
+    this.router.navigate([page])
   }
 }

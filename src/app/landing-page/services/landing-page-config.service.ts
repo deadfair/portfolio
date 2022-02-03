@@ -46,6 +46,16 @@ export class LandingPageConfigService {
     { id: "SQL, NoSQL", text: "SQL, NoSQL", value: 60 },
   ];
 
+  private readonly _projects: { id: string; url: string; text: string; imgSrc: string; }[] = [
+    { id: "1", url: 'snake', text: "Snake", imgSrc: "../../../assets/imgs/snake3.jpg" },
+    { id: "2", url: 'amoba', text: "Amőba", imgSrc: "../../../assets/imgs/én_1.jpeg" },
+    { id: "3", url: 'snake', text: "Snake", imgSrc: "../../../assets/imgs/snake3.jpg" }
+  ];
+
+  public get projects(): { id: string; url: string; text: string; imgSrc: string; }[] {
+    return this._projects;
+  }
+
   public get skills(): { id?: string; text: string; value: number; }[] {
     return this._skills;
   }
