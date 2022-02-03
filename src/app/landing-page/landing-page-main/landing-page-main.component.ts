@@ -23,7 +23,6 @@ export class LandingPageMainComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {}
   ngAfterViewInit(): void {
-    console.log(this.about);
     this._scrollService.setElementRefById('about',this.about)
     this._scrollService.setElementRefById('skills',this.skills)
     this._scrollService.setElementRefById('works',this.works)
