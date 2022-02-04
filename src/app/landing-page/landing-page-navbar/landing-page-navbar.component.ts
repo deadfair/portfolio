@@ -9,7 +9,7 @@ import { ScrollService } from '../services/scroll.service';
 export class LandingPageNavbarComponent implements OnInit, AfterViewInit {
 
   public linkNames: string[] = [];
-  @ViewChild('navbar') public navbar!: ElementRef ;
+  @ViewChild('navbar') public navbar?: ElementRef ;
 
   constructor(private _scrollService: ScrollService) { }
 
@@ -20,7 +20,9 @@ export class LandingPageNavbarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this._scrollService.setNavbarElementRef(this.navbar)
+    if (this.navbar) {
+      this._scrollService.setNavbarElementRef(this.navbar)
+    }
   }
 
   scroll(event:Event): void{

@@ -10,11 +10,13 @@ export class LandingPageHeaderComponent implements OnInit,AfterViewInit {
 
   constructor(private _scrollService: ScrollService) { }
 
-  @ViewChild('home') public home!: ElementRef ;
+  @ViewChild('home') public home?: ElementRef ;
 
   ngOnInit(): void {}
   ngAfterViewInit(): void {
-    this._scrollService.setElementRefById('home',this.home)
+    if (this.home) {
+      this._scrollService.setElementRefById('home',this.home)
+    }
   }
 
 }

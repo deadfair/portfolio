@@ -5,11 +5,7 @@ import { LandingPageComponent } from './landing-page/landing-page/landing-page.c
 import { SnakeGameComponent } from './snake-game/components/snake-game/snake-game.component';
 
 const routes: Routes = [
-  {
-    path:"",
-    redirectTo:"/portfolio",
-    pathMatch:"full"
-  },
+
   {
     path:"portfolio",
     component:LandingPageComponent,

@@ -12,7 +12,7 @@ import { LandingPageConfigService } from '../services/landing-page-config.servic
 export class LandingPageFooterComponent implements OnInit,AfterViewInit {
   public icons:IconDefinition[] = [faUser,faMapMarkerAlt,faEnvelope,faPhone,faFacebookF, faGithub, faLinkedinIn]
   public readonly personFields;
-  @ViewChild('footer') public footer!: ElementRef ;
+  @ViewChild('footer') public footer?: ElementRef ;
 
   constructor(private readonly _scrollService: ScrollService,private readonly _landingPageConfigService:LandingPageConfigService) {
     this.personFields=this._landingPageConfigService.person
@@ -20,8 +20,9 @@ export class LandingPageFooterComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {}
   ngAfterViewInit(): void {
-    this._scrollService.setElementRefById('footer',this.footer)
-
+    if (this.footer) {
+      this._scrollService.setElementRefById('footer',this.footer)
+    }
   }
 
 }
