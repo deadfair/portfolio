@@ -1,0 +1,19 @@
+<section #container class="container-md p-0">
+  <div *ngFor="let a of [].constructor(x); index as i"
+    class="row justify-content-center">
+    <div (click)=onClick(i,j)
+      *ngFor="let b of [].constructor(y); index as j"
+      class="border p-0 text-center"
+      [ngStyle]="{'width': x && container.clientWidth/x <50 ? container.clientWidth/x + 'px':'50px',
+      'height':x && container.clientWidth/x <50 ?container.clientWidth/x + 'px':'50px'}">
+      <div class="d-flex justify-content-center align-items-center h-100">
+        <fa-icon
+          [ngStyle]="{'color':table[x*i+j].color,
+          'font-size': x && container.clientWidth/x <50?container.clientWidth/x/3*2+'px':50/3*2+'px'}"
+          *ngIf="x && table[x*i+j]"
+          [icon]="table[x*i+j].sign">
+        </fa-icon>
+      </div>
+    </div>
+  </div>
+</section>

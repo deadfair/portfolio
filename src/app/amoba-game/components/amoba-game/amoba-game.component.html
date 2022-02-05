@@ -1,1 +1,84 @@
-<p>amoba-game works!</p>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" role="button" >Restart</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Options
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item">Action</a></li>
+            <li><a class="dropdown-item" >Another action</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+
+    <section class="firstpart">
+            <h1>AMŐBA<span>KING</span></h1>
+            <div class="info">
+                <p>következő játékos:</p>
+                <!-- <p id="nextplayer"></p> -->
+                <p>The Winner Player:</p>
+                <!-- <p id="gyoztes"></p> -->
+            </div>
+            <app-amoba-canvas [x]=10 [y]=10></app-amoba-canvas>
+    </section>
+
+    <!-- <section class="secondpart hatra">
+        <div class="tablameret">
+            <div class="meret">
+                <p>Méret:</p>
+            </div>
+            <div class="meret">
+                <p class="xy">X:</p>
+                <i id="minuszx" class="fas fa-minus-circle btn"></i>
+                <p id="xkoord" >10</p>
+                <i id="pluszx" class="fas fa-plus-circle btn"></i>
+            </div>
+            <div class="meret">
+                <p class="xy">Y:</p>
+                <i id="minuszy" class="fas fa-minus-circle btn"></i>
+                <p id="ykoord">10</p>
+                <i id="pluszy" class="fas fa-plus-circle btn"></i>
+            </div>
+        </div>
+        <div class="jatekosaddremove">
+            <p>Playerek:</p>
+            <div class="playerflex">
+                <p class="xy">Add:</p><i class="fas fa-plus-circle pluszbotton btn"></i>
+
+            </div>
+            <div class="playerflex">
+                <p class="xy">Remove:</p>
+                <i class="fas fa-minus-circle minuszbotton btn"></i>
+            </div>
+        </div>
+        <div id="jatekosadas" class="jatekosadas">
+            <div class="playerflex">
+                <p class="xy">Player1:</p>
+                <i class="fas fa-sync-alt playercsere1 playercserex"></i>
+                <div class="aplayer1 jelek"></div>
+            </div>
+            <div class="playerflex">
+                <p class="xy">Player2:</p>
+                <i class="fas fa-sync-alt playercsere2 playercserex"></i>
+                <div class="aplayer2 jelek"></div>
+            </div>
+        </div>
+    </section> -->
+</main>

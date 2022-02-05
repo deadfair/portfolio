@@ -20,6 +20,7 @@ import { SnakeCanvasComponent } from './snake-game/components/snake-canvas/snake
 import { SnakeConfigService } from './snake-game/services/snake-config.service';
 import { LandingPageConfigService } from './landing-page/services/landing-page-config.service';
 import { AmobaGameComponent } from './amoba-game/components/amoba-game/amoba-game.component';
+import { AmobaCanvasComponent } from './amoba-game/components/amoba-canvas/amoba-canvas.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { AmobaGameComponent } from './amoba-game/components/amoba-game/amoba-gam
     SnakeGameComponent,
     SnakeCanvasComponent,
     AmobaGameComponent,
+    AmobaCanvasComponent,
   ],
   imports: [
     BrowserModule,
