@@ -1,7 +1,9 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { faTimes, IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import {faOpera} from '@fortawesome/free-brands-svg-icons';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faOpera } from '@fortawesome/free-brands-svg-icons';
 import { Player } from '../../models/player';
+import { PlayersService } from '../../services/players.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-amoba-canvas',
@@ -13,40 +15,84 @@ export class AmobaCanvasComponent implements OnInit {
   iconX:IconDefinition=faOpera
   @ViewChild('container') public container?:ElementRef
 
-  @Input() x?:number;
-  @Input() y?:number;
-  @Output() winnerPlayer:EventEmitter<Player> = new EventEmitter();
-  @Output() nextPlayer:EventEmitter<Player> = new EventEmitter();
+  @Input() x?:BehaviorSubject<number>;
+  @Input() y?:BehaviorSubject<number>;
+
+  @Input() restartEmitter?:EventEmitter<void>;
 
   @HostListener('window:resize', ['$event'])
   onResize(event:any) {
     event.target.innerWidth;
   }
   private gameOver:boolean = false;
-  private players: Player[]=[new Player(0,"red",faOpera),new Player(1,"red",faTimes)]
-  private currentPlayer:Player = this.players[0] ;
   // 2D to 1D => // index = indexX * arrayWidth + indexY;
-  public table: Player[] = []
+  public table: Player[]|undefined[] = []
   private step:number= 0;
+  private lastX = this.x?.value
+  private xSub?:Subscription
 
-  constructor(){}
-  ngOnInit(): void {}
+  constructor(private readonly _playersService:PlayersService){}
 
-  onClick(x:number | undefined, y:number | undefined):void {
-    if (this.gameOver || x===undefined || y===undefined || !this.x || this.table[x*this.x+y]) {
+  ngOnInit(): void {
+    this.restartEmitter?.subscribe(() => {this.restart()})
+    this.xSub = this.x?.subscribe({
+      next: (value:number) => {
+        console.log(value,this.lastX,this.y?.value);
+        if (value && this.lastX && this.y?.value) {
+          if ( this.lastX > value) {
+            // -1 col
+            for (let i = this.y?.value; i >= 0 ; i--) {
+              this.table.splice(i*(this.lastX)+value,1)
+            }
+          }else{
+            // +1 col
+            for (let i = this.y?.value; i >= 0 ; i--) {
+              this.table.splice(i*(this.lastX)+value-1,0,undefined)
+            }
+          }
+        }
+        this.lastX = value
+      },
+      error: (err)=>{console.log(err)},
+      complete:()=>{}
+    })
+    this.tableInit()
+  }
+
+  private tableInit():void {
+    if (!(this.x?.value && this.y?.value)) {
       return
     }
-    this.table[x*this.x+y] = this.currentPlayer
+    for (let i = 0; i < this.x?.value *this.y?.value; i++) {
+      this.table[i]= undefined
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.xSub?.unsubscribe()
+  }
+
+  restart(): void {
+    this.table=[]
+    this.step = 0
+    this._playersService.restart()
+    this.gameOver=false;
+  }
+
+  cellOnClick(x:number | undefined, y:number | undefined):void {
+    if (this.gameOver || x===undefined || y===undefined || !this.x?.value || this.table[x*this.x?.value+y]) {
+      return
+    }
+    this.table[x*this.x?.value+y] = this._playersService.nextPlayer.value
     if (this.isTie()) {
       // döntetlen
     }
     this.step++
     if (this.isGameOver()) {
       this.gameOver=true
-      this.winnerPlayer.emit(this.currentPlayer)
+      this._playersService.setWinnerPlayer()
     }
-    this.currentPlayer = this.getNextPlayer();
-    this.nextPlayer.emit(this.currentPlayer)
+    this._playersService.setNextPlayer()
   }
 
   private isGameOver():boolean {
@@ -54,11 +100,11 @@ export class AmobaCanvasComponent implements OnInit {
   }
 
   private ishorizontalOver():boolean{
-    if (!this.y) {
+    if (!this.y?.value) {
       return true
     }
     for(let i=0;i<this.table.length;i++){
-      if (i%this.y<=this.y-5 && this.table[i]) {
+      if (i%this.y?.value<=this.y?.value-5 && this.table[i]) {
         if(this.table[i]===this.table[i+1] && this.table[i]===this.table[i+2]  && this.table[i]===this.table[i+3]  && this.table[i]===this.table[i+4]){
           return true
         }
@@ -67,27 +113,28 @@ export class AmobaCanvasComponent implements OnInit {
     return false;
   }
 
-  isVerticalOver():boolean{
-    if (!this.y || !this.x) {
+  private isVerticalOver():boolean{
+    if (!this.y?.value || !this.x?.value) {
       return true
     }
     for(let i=0;i<this.table.length;i++){
-      if(this.table[i] && i<((this.y-4)*this.x)){
-        if(this.table[i]===this.table[i+this.x] && this.table[i]===this.table[i+2*this.x]  && this.table[i]===this.table[i+3*this.x]  && this.table[i]===this.table[i+4*this.x]){
+      if(this.table[i] && i<((this.y?.value-4)*this.x?.value)){
+        if(this.table[i]===this.table[i+this.x?.value] && this.table[i]===this.table[i+2*this.x?.value]  && this.table[i]===this.table[i+3*this.x?.value]  && this.table[i]===this.table[i+4*this.x?.value]){
           return true;
         }
       }
     }
     return false;
   }
-  isCrossRightOver():boolean{
-    if (!this.y || !this.x) {
+
+  private isCrossRightOver():boolean{
+    if (!this.y?.value || !this.x?.value) {
       return true
     }
     for(var i=0;i<this.table.length;i++){
-      if(this.table[i] && i<((this.y-4)*this.x)){
-        if((i+5)%this.x!=1){
-          if(this.table[i]===this.table[i+(1+this.x)] && this.table[i]===this.table[i+(1+this.x)*2]  && this.table[i]===this.table[i+(1+this.x)*3]  && this.table[i]===this.table[i+4*(1+this.x)]){
+      if(this.table[i] && i<((this.y?.value-4)*this.x?.value)){
+        if((i+5)%this.x?.value!=1){
+          if(this.table[i]===this.table[i+(1+this.x?.value)] && this.table[i]===this.table[i+(1+this.x?.value)*2]  && this.table[i]===this.table[i+(1+this.x?.value)*3]  && this.table[i]===this.table[i+4*(1+this.x?.value)]){
             return true;
           }
         }else{
@@ -97,14 +144,15 @@ export class AmobaCanvasComponent implements OnInit {
     }
     return false;
   }
-  isCrossLeftOver():boolean{
-    if (!this.y || !this.x) {
+
+  private isCrossLeftOver():boolean{
+    if (!this.y?.value || !this.x?.value) {
       return true
     }
     for(var i=0;i<this.table.length;i++){
-      if(this.table[i] && i<((this.y-4)*this.x)){
-        if(!(i%this.x<4)){
-          if(this.table[i]===this.table[i+(-1+this.x)] && this.table[i]===this.table[i+(-1+this.x)*2]  && this.table[i]===this.table[i+(-1+this.x)*3]  && this.table[i]===this.table[i+4*(-1+this.x)])
+      if(this.table[i] && i<((this.y?.value-4)*this.x?.value)){
+        if(!(i%this.x?.value<4)){
+          if(this.table[i]===this.table[i+(-1+this.x?.value)] && this.table[i]===this.table[i+(-1+this.x?.value)*2]  && this.table[i]===this.table[i+(-1+this.x?.value)*3]  && this.table[i]===this.table[i+4*(-1+this.x?.value)])
           {return true;}
         }else{
           i+=4;
@@ -114,17 +162,7 @@ export class AmobaCanvasComponent implements OnInit {
     return false;
   }
 
-
-  private getNextPlayer():Player {
-    const currentI:number = this.players.findIndex(player => player.id === this.currentPlayer.id)
-    // ide jöhetne vmi ha currentI === -1
-    if (currentI === this.players.length - 1) {
-      return this.players[0]
-    }
-    return this.players[currentI+1]
-  }
-
-  isTie():boolean {
-    return this.x!==undefined && this.y!==undefined && this.step===this.x*this.y
+  private isTie():boolean {
+    return this.x?.value!==undefined && this.y?.value!==undefined && this.step===this.x?.value*this.y?.value
   }
 }

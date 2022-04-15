@@ -1,388 +1,61 @@
-// *{
-//   margin:0;
-//   text-decoration: none;
-//   padding: 0;
-//   box-sizing: border-box;
-// }
 
-// /*általános--------------------------------------------------------------------------------*/
-// .btn{
-//   cursor:pointer;
-// }
-// section{
-//   padding: 80px 0;
-//   height:100%;
-//   width:100%;
-// }
-// body{
-//   background: rgb(204, 204, 204);
-
-// }
-// p{
-//   font-size: 22px;
-
-// }
-
-// i{
-//   font-size:1.8em;
-// }
-// /*navbar--------------------------------------------------------------------------------*/
-// .navbar{
-//   z-index: 2147483647;
-//   position:fixed;
-//   width: 100%;
-//   height:60px;
-//   background: rgb(54, 54, 54);
-//   color:white;
-//   font-size: 20px;;
-
-// }
-// .menu{
-//   height:100%;
-//   display:flex;
-//   flex-flow: row wrap;
-//   justify-content: space-between;
-// }
-// .menu li{
-//   list-style: none;
-//   transition: color 0.3 ease;
-//   padding:20px 50px;
-// }
-
-// .menu li:hover{
-//   color:rgb(103, 191, 231);
-// }
-
-
-
-
-// /*firstsection--------------------------------------------------------------------------------*/
-
-// .firstpart h1{
-//   text-align: center;
-//   font-size: 40px;
-//   height:50px;
-//   font-weight: 700;
-// }
-// .firstpart h1 span{
-//   color:red;
-// }
-// .tabla{
-//   display:grid;
-//   grid-template-columns: repeat(auto-fill,  minmax(50px,1fr) );
-//   grid-template-rows: repeat(auto-fill,  minmax(50px,1fr) );
-//   margin:auto;
-// }
-// .x{
-//   border: 1px solid black;
-//   cursor:pointer;
-//   margin: auto;
-//   font-size: 40px;
-//   min-width:50px;
-//   min-height:50px;
-//   text-align: center;
-// }
-// .info{
-//   display:flex;
-//   flex-flow: row wrap;
-//   justify-content: center;
-//   align-items: center;
-//   height:60px;
-// }
-// .info p{
-//   margin:0 10px;
-//   text-align: center;
-// }
-// .firstpart .info p:nth-child(2n+1){
-//   min-width: 160px;
-//   font-size: 22px;
-// }
-// .firstpart .info p:nth-child(2n){
-//   font-size: 28px ;
-//   min-width: 50px;
-//   font-weight: 900;
-// }
-
-// .firstpart{
-//   opacity: 1;
-//   transition: all 0.5s linear;
-// }
-// .hatra{
-//   opacity: 0;
-//   z-index: -99;
-// }
-// /*second--------------------------------------------------------------------------------*/
-
-// .secondpart{
-//   top:0;
-//   left:0;
-//   position: absolute;
-//   transition: all 0.5s linear;
-// }
-
-
-// .tablameret{
-//   display:flex;
-//   flex-flow: row wrap;
-//   width:100%;
-//   height:70px;
-// }
-// .meret{
-//   flex:1 1 0;
-//   display:flex;
-//   flex-flow: row wrap;
-//   align-items: center;
-//   justify-content: center;
-//   margin:10px 50px;
-//   border: 3px solid rgb(74, 180, 230);
-//   border-radius: 8px;
-//   box-shadow: 1px -1px 2px 2px rgb(103, 191, 231)
-//           ,inset 1px 1px 2px 2px rgb(16, 158, 224);
-//   background: rgb(171, 216, 236);
-// }
-
-
-// .meret p:nth-child(4n+3){
-//   text-align: center;
-//   min-width: 40px;
-// }
-
-// .xy{
-//   margin:0 10px ;
-// }
-// i:hover{
-//   color:rgb(245, 0, 0);
-// }
-
-// .jatekosaddremove{
-//   height:70px;
-//   align-content: center;
-//   display:flex;
-//   flex-flow: row wrap;
-//   justify-content: space-around;
-//   align-items: center;
-//   margin:10px 50px;
-//   border: 3px solid rgb(74, 180, 230);
-//   border-radius: 8px;
-//   box-shadow: 1px -1px 2px 2px rgb(103, 191, 231)
-//           ,inset 1px 1px 2px 2px rgb(16, 158, 224);
-//           background: rgb(171, 216, 236);
-
-// }
-
-// .jatekosaddremove p:nth-child(1){
-//   transform: translateX(-28px);
-// }
-
-// .jatekosaddremove .playerflex:nth-child(3){
-//   transform: translateX(28px);
-// }
-
-
-// .jatekosadas .playerflex{
-//   margin:10px 10px;
-// border: 3px solid rgb(74, 180, 230);
-// border-radius: 8px;
-// box-shadow: 1px -1px 2px 2px rgb(103, 191, 231)
-//           ,inset 1px 1px 2px 2px rgb(16, 158, 224);
-//           background: rgb(171, 216, 236);
-//           width:205px;
-// }
-
-
-// .jatekosadas{
-//   display:flex;
-//   flex-flow: row wrap;
-//   justify-content: center;
-// }
-// .playerflex{
-//   display:flex;
-//   flex-flow: row nowrap;
-//   align-items: center;
-//   height:80px;
-// }
-
-
-// .jobbra{
-//   transform: translateX(+100%);
-//   opacity:0;
-// }
-
-
-// .jelek{
-//   height:60px;
-//   margin:0 10px;
-//   text-align: center;
-//   font-size: 28px ;
-//   min-width: 50px;
-//   padding: 13px 0;
-// }
-
-// .playercserex{
-//   cursor:pointer;
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// .playerflex h1{
-//   font-size: 28px;
-//   min-width: 50px;
-//   min-width: 50px;
-//   padding: 13px 0;
-//   text-align: center;
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// .botton{
-//   width:50px;
-//   height:50px;
-//   cursor:pointer;
-//   background-color: yellow;
-// }
-// .buttonpack{
-//   display:flex;
-//   flex-flow: row nowrap;
-//   justify-content: center;
-// }
-// .buttonpack p{
-//   display: inline-block;
-//   font-size: 25px;
-//   width:100px;
-//   padding: 8px 16px;
-//   margin: 10px 3px;
-//   width:100px;
-//   text-align: center;
-
-// }
-// .button2{
-//   margin: auto 0 ;
-//   font-size: 40px;
-//   min-width:50px;
-//   min-height:50px;
-//   text-align: center;
-// }
-// .playerstyle, .button{
-//   display: inline-block;
-//   font-size: 25px;
-//   width:100px;
-//   padding: 8px 16px;
-//   margin: 10px 3px;
-//   border-radius: 16px;
-//   transition: all 0.5s ease;
-//   text-align: center;
-//   cursor:pointer;
-// }
-// .playerstyle, .button:hover{
-//   color: var(--szin1);
-//   background: none;
-// }
-
-// /*szincserékhez--------------------------------------------------------------------------------*/
-
-// .blue{
-//   color:blue;
-// }
-// .red{
-//   color:red;
-// }
-// .green{
-//   color:green;
-// }
-// .yellow{
-//   color:yellow;
-// }
-// .black{
-//   color:black;
-// }
-// .orange{
-//   color:orange;
-// }
-// .pink{
-//   color:pink;
-// }
-// .brown{
-//   color:brown;
-// }
-
-// .bblue{
-//   background:blue;
-//   border: 2px solid blue;
-
-// }
-// .bred{
-//   background:red;
-//   border: 2px solid red;
-
-// }
-// .bgreen{
-//   background:green;
-//   border: 2px solid green;
-
-// }
-// .byellow{
-//   background:yellow;
-//   border: 2px solid yellow;
-
-// }
-// .bblack{
-//   background:black;
-//   color:white;
-//   border: 2px solid black;
-
-// }
-// .borange{
-//   background:orange;
-//   border: 2px solid orange;
-
-// }
-// .bpink{
-//   background:pink;
-//   border: 2px solid pink;
-
-// }
-// .bbrown{
-//   background:brown;
-//   border: 2px solid brown;
-
-// }
+main{
+  background: rgb(204, 204, 204);
+  .player{
+    height:6rem;
+      &__icon{
+        width:6rem;
+        fa-icon{
+          font-size: 3rem
+        }
+      }
+    @media (max-width: 575.98px) {
+      height:3rem;
+
+      &__icon{
+        width:4rem;
+        fa-icon{
+          font-size: 2rem;
+        }
+      }
+    }
+    @media (max-width: 363px) {
+      height:2.2rem;
+      &__text{
+        font-size: 1.1rem !important;
+      }
+      &__icon{
+        width:2rem;
+        fa-icon{
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
+nav{
+  a {
+    &:hover{
+      color:rgba(255,255,255,.55) !important;
+    }
+  }
+
+  background: rgb(54, 54, 54) !important;
+  .dropdown-item.active, .dropdown-item:active{
+    background-color:#363636
+  }
+  .iconhover{
+    color: red !important;
+  }
+  .restart{
+    &:hover{
+      color: red !important
+    }
+  }
+}
+.card{
+  background: rgb(187, 187, 187);
+  &__icon{
+    font-size: 2rem;
+  }
+}
